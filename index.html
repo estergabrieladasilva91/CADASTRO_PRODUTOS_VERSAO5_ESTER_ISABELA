@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produto</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="container">
+
+        <header class="cabecalho">
+            <div class="cabecalho-conteudo">
+                <span class="etiqueta">SISTEMA DE ESTOQUE</span>
+                <h1>Cadastro de Produto</h1>
+                <p>Organize e acompanhe seus produtos de maneira simples.</p>
+            </div>
+
+            <div class="perfil">
+                <img src="isabelaimagem.jpg" alt="Isabela">
+                <span>Isabela</span>
+            </div>
+        </header>
+
+        <section class="conteudo-principal">
+
+            <section class="painel formulario-painel">
+                <div class="titulo-secao">
+                    <div>
+                        <span class="subtitulo">GERENCIAMENTO</span>
+                        <h2>Adicionar produto</h2>
+                    </div>
+                    <span class="icone-secao">＋</span>
+                </div>
+
+                <div id="mensagem-erro" class="mensagem-erro" role="alert" aria-live="polite"></div>
+
+                <form id="produto-form" autocomplete="off">
+
+                    <div class="campo">
+                        <label for="nome">Nome do produto</label>
+                        <input
+                            type="text"
+                            id="nome"
+                            placeholder="Ex: Teclado"
+                            list="sugestoes-produtos"
+                            required
+                        >
+                        <datalist id="sugestoes-produtos"></datalist>
+                    </div>
+
+                    <div class="campos-duplos">
+                        <div class="campo">
+                            <label for="preco">Preço (R$)</label>
+                            <input
+                                type="number"
+                                id="preco"
+                                placeholder="0,00"
+                                min="0.01"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+
+                        <div class="campo">
+                            <label for="quantidade">Quantidade</label>
+                            <input
+                                type="number"
+                                id="quantidade"
+                                placeholder="0"
+                                min="1"
+                                step="1"
+                                required
+                            >
+                        </div>
+                    </div>
+
+                    <button type="submit" id="botao-salvar" class="botao-principal">
+                        <span>＋</span> Adicionar produto
+                    </button>
+
+                    <button type="button" id="botao-cancelar-edicao" class="botao-cancelar" hidden>
+                        Cancelar edição
+                    </button>
+                </form>
+            </section>
+
+            <section class="painel resumo-painel">
+                <div class="resumo-texto">
+                    <span class="subtitulo">VISÃO GERAL</span>
+                    <h2>Estoque total</h2>
+                    <p>Quantidade de unidades nos produtos exibidos.</p>
+                </div>
+
+                <div class="resumo-valor">
+                    <span id="total-estoque">0</span>
+                    <span class="resumo-unidade">unidades</span>
+                </div>
+
+                <div class="resumo-icone">▦</div>
+            </section>
+
+        </section>
+
+        <section class="painel tabela-painel">
+
+            <div class="tabela-cabecalho">
+                <div>
+                    <span class="subtitulo">CONTROLE DE INVENTÁRIO</span>
+                    <h2>Produtos cadastrados</h2>
+                </div>
+
+                <button type="button" id="botao-bootstrap" class="botao-bootstrap">
+                    Conceito Bootstrap
+                </button>
+            </div>
+
+            <div class="barra-ferramentas">
+                <div class="campo-busca">
+                    <span>⌕</span>
+                    <input
+                        type="search"
+                        id="campo-busca"
+                        placeholder="Pesquisar produto..."
+                    >
+                </div>
+
+                <button type="button" id="limpar-tabela" class="botao-limpar">
+                    Limpar estoque
+                </button>
+            </div>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tabela-produtos"></tbody>
+                </table>
+            </div>
+
+            <div id="mensagem-vazia" class="mensagem-vazia">
+                <span>▤</span>
+                <h3>Nenhum produto encontrado</h3>
+                <p>Adicione um produto ou tente outra pesquisa.</p>
+            </div>
+
+        </section>
+
+        <footer class="rodape">
+            <div class="rodape-perfil">
+                <img src="esterimagem.jpg" alt="Ester">
+                <span>Ester</span>
+            </div>
+
+            <span class="rodape-texto">Sistema de Cadastro de Produtos</span>
+        </footer>
+
+    </main>
+
+    <!-- Modal de confirmação -->
+    <div id="modal-confirmacao" class="modal-fundo" aria-hidden="true">
+        <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="titulo-confirmacao">
+            <div class="modal-icone modal-icone-alerta">!</div>
+
+            <h2 id="titulo-confirmacao">Confirmar ação</h2>
+            <p id="texto-confirmacao">Tem certeza de que deseja continuar?</p>
+
+            <div class="modal-botoes">
+                <button type="button" id="botao-cancelar-modal" class="botao-secundario">
+                    Cancelar
+                </button>
+
+                <button type="button" id="botao-confirmar-modal" class="botao-perigo">
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal sobre Bootstrap -->
+    <div id="modal-bootstrap" class="modal-fundo" aria-hidden="true">
+        <div class="modal-conteudo modal-bootstrap-conteudo" role="dialog" aria-modal="true" aria-labelledby="titulo-bootstrap">
+            <button type="button" class="fechar-modal" id="fechar-bootstrap" aria-label="Fechar">
+                ×
+            </button>
+
+            <div class="modal-icone modal-icone-bootstrap">B</div>
+
+            <h2 id="titulo-bootstrap">Conceito Bootstrap</h2>
+
+            <p>
+                Bootstrap é um framework que facilita a criação de interfaces
+                modernas e responsivas. Ele oferece componentes prontos, como
+                botões, tabelas, formulários e modais.
+            </p>
+
+            <p>
+                Neste projeto, utilizamos conceitos semelhantes aos do Bootstrap
+                na organização dos elementos, nos formulários, nos botões e nas
+                janelas de confirmação, criando uma interface mais organizada
+                e fácil de utilizar.
+            </p>
+
+            <button type="button" id="botao-entendi" class="botao-principal">
+                Entendi
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
